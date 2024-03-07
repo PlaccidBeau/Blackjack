@@ -38,7 +38,7 @@ get("/") do
 end
 
 get("/blackjack") do
-  add_card = "https://deckofcardsapi.com/api/deck/new/draw/?count=2"
+  add_card = "https://deckofcardsapi.com/api/deck/new/draw/?count=6"
   raw_response = HTTP.get(add_card)
   parsed_response = JSON.parse(raw_response)
   @parsed_response = [parsed_response]
@@ -51,15 +51,33 @@ get("/blackjack") do
   @card_one_hash = cards.at(0)
   @card_one_value = @card_one_hash["value"]
   @card_one_image = @card_one_hash["image"]
-  @card_one_suit = @card_one_hash["suit"]
   # 
   # Second card
   # 
   @card_two_hash = cards.at(1)
   @card_two_value = @card_two_hash["value"]
   @card_two_image = @card_two_hash["image"]
-  @card_two_suit = @card_two_hash["suit"]
 
+  @card_three_hash = cards.at(2)
+  @card_three_value = @card_three_hash["value"]
+  @card_three_image = @card_three_hash["image"]
+
+  @card_four_hash = cards.at(3)
+  @card_four_value = @card_four_hash["value"]
+  @card_four_image = @card_four_hash["image"]
+
+  @card_five_hash = cards.at(4)
+  @card_five_value = @card_five_hash["value"]
+  @card_five_image = @card_five_hash["image"]
+
+  @card_six_hash = cards.at(5)
+  @card_six_value = @card_six_hash["value"]
+  @card_six_image = @card_six_hash["image"]
+
+  
+
+  #Works
+  # 
   if face_cards.include?(@card_one_value)
     @card_one_value = 10
   elsif @card_one_value == "ACE"
@@ -71,13 +89,54 @@ get("/blackjack") do
   elsif @card_two_value == "ACE"
     @card_two_value = 11
   end
-
-  if @card_one_value && @card_two_value == 11
-    @card_one_value = 11
-    @card_two_value = 1
+  if face_cards.include?(@card_three_value)
+    @card_three_value = 10
+  elsif @card_three_value == "ACE"
+    @card_three_value = 11
   end
+  if face_cards.include?(@card_four_value)
+    @card_four_value = 10
+  elsif @card_four_value == "ACE"
+    @card_four_value = 11
+  end
+  if face_cards.include?(@card_five_value)
+    @card_five_value = 10
+  elsif @card_five_value == "ACE"
+    @card_five_value = 11
+  end
+  if face_cards.include?(@card_six_value)
+    @card_six_value = 10
+  elsif @card_six_value == "ACE"
+    @card_six_value = 11
+  end
+
+  # Proto
+  # 
+
+  # def is_face_card(card)
+  #   face_card = ["KING", "QUEEN", "JACK"]
+  #   if face_card.include?(card)
+  #     card = 10
+  #   elsif card == "ACE"
+  #     card = 11
+  #   end
+  # end
+
+  # is_face_card(@card_one_value)
+  # is_face_card(@card_two_value)
+  # is_face_card(@card_three_value)
+  # is_face_card(@card_four_value)
+  # is_face_card(@card_five_value)
+  # is_face_card(@card_six_value)
+
+  # Not working properly
+  # if @card_one_value && @card_two_value == 11
+  #   @card_one_value = 11
+  #   @card_two_value = 1
+  # end
+
   
-  @total = @card_one_value.to_i + @card_two_value.to_i
+  @startingHand = @card_one_value.to_i + @card_two_value.to_i
 
 
   # def stand()
