@@ -38,7 +38,7 @@ get("/") do
 end
 
 get("/blackjack") do
-  add_card = "https://deckofcardsapi.com/api/deck/new/draw/?count=6"
+  add_card = "https://deckofcardsapi.com/api/deck/new/draw/?count=12"
   raw_response = HTTP.get(add_card)
   parsed_response = JSON.parse(raw_response)
   @parsed_response = [parsed_response]
@@ -46,6 +46,7 @@ get("/blackjack") do
   cards = parsed_response["cards"]
   face_cards = ["KING", "QUEEN", "JACK"]
   # 
+  # PlayersPile
   # First card
   # 
   @card_one_hash = cards.at(0)
@@ -74,10 +75,40 @@ get("/blackjack") do
   @card_six_value = @card_six_hash["value"]
   @card_six_image = @card_six_hash["image"]
 
+  # DealersPile
+  # First card
+  # 
+  @dealers_first_hash = cards.at(6)
+  @dealers_first_value = @dealers_first_hash["value"]
+  @dealers_first_image = @dealers_first_hash["image"]
+  # 
+  # Second card
+  # 
+  @dealers_second_hash = cards.at(7)
+  @dealers_second_value = @dealers_second_hash["value"]
+  @dealers_second_image = @dealers_second_hash["image"]
+
+  @dealers_third_hash = cards.at(8)
+  @dealers_third_value = @dealers_third_hash["value"]
+  @dealers_third_image = @dealers_third_hash["image"]
+
+  @dealers_fourth_hash = cards.at(9)
+  @dealers_fourth_value = @dealers_fourth_hash["value"]
+  @dealers_fourth_image = @dealers_fourth_hash["image"]
+
+  @dealers_fifth_hash = cards.at(10)
+  @dealers_fifth_value = @dealers_fifth_hash["value"]
+  @dealers_fifth_image = @dealers_fifth_hash["image"]
+
+  @dealers_sixth_hash = cards.at(11)
+  @dealers_sixth_value = @dealers_sixth_hash["value"]
+  @dealers_sixth_image = @dealers_sixth_hash["image"]
+
   
 
   #Works
   # 
+  #Player
   if face_cards.include?(@card_one_value)
     @card_one_value = 10
   elsif @card_one_value == "ACE"
@@ -110,6 +141,42 @@ get("/blackjack") do
     @card_six_value = 11
   end
 
+
+  #Dealer 
+  if face_cards.include?(@dealers_first_value)
+    @dealers_first_value = 10
+  elsif @dealers_first_value == "ACE"
+    @dealers_first_value = 11
+  end
+
+  if face_cards.include?(@dealers_second_value)
+    @dealers_second_value = 10
+  elsif @dealers_second_value == "ACE"
+    @dealers_second_value = 11
+  end
+  if face_cards.include?(@dealers_third_value)
+    @dealers_third_value = 10
+  elsif @dealers_third_value == "ACE"
+    @dealers_third_value = 11
+  end
+  if face_cards.include?(@dealers_fourth_value)
+    @dealers_fourth_value = 10
+  elsif @dealers_fourth_value == "ACE"
+    @dealers_fourth_value = 11
+  end
+  if face_cards.include?(@dealers_fifth_value)
+    @dealers_fifth_value = 10
+  elsif @dealers_fifth_value == "ACE"
+    @dealers_fifth_value = 11
+  end
+  if face_cards.include?(@dealers_sixth_value)
+    @dealers_sixth_value = 10
+  elsif @dealers_sixth_value == "ACE"
+    @dealers_sixth_value = 11
+  end
+  
+
+  @backOfCard = "https://deckofcardsapi.com/static/img/back.png"
   # Proto
   # 
 
