@@ -9,6 +9,28 @@
 
 <!--<p>3.)The cards hash:</p><br>
 <p><%#=@card_one_hash%></p>-->
+<div class="container">
+  <div class="dealers_cards row">
+    <div class="card-column col">
+      <img src="<%=@dealers_first_image%>" alt="">
+    </div>
+    <div class="card-column dealerSecondCard col">
+      <img class="dealerSecondImage" src="<%=@backOfCard%>" alt="">
+    </div>
+    <div class="card-column dealerThirdCArd ">
+      <img class="dealerThirdImage" src="" alt="">
+    </div>
+    <div class="card-column dealerFourthCard">
+      <img class="dealerFourthCard" src="" alt="">
+    </div>
+    <div class="card-column dealerFifthCard ">
+      <img class="dealerFifthCard" src="" alt="">
+    </div>
+    <div class="card-column dealerSixthCard ">
+      <img class="dealerSixthCard" src="" alt="">
+    </div>
+  </div>
+</div>
 
 <p>4.)The cards value:</p><br>
 <p>Your in the money</p>
@@ -59,6 +81,19 @@ let thirdCard = document.querySelector('.thirdCard')
 let fourthCard = document.querySelector('.fourthCard')
 let fifthCard = document.querySelector('.fifthCard')
 let sixthCard = document.querySelector('.sixthCard')
+
+let dealerSecondCard = document.querySelector('.dealerSecondCard')
+let dealerThirdCard = document.querySelector('.dealerThirdCard')
+let dealerFourthCard = document.querySelector('.dealerFourthCard')
+let dealerFifthCard = document.querySelector('.dealerFifthCard')
+let dealerSixthCard = document.querySelector('.dealerSixthCard')
+
+let dealerSecondImage = document.querySelector('.dealerSecondImage')
+let dealerThirdImage = document.querySelector('.dealerThirdImage')
+let dealerFourthImage = document.querySelector('.dealerFourthImage')
+let dealerFifthImage = document.querySelector('.dealerFifthImage')
+let dealerSixthImage = document.querySelector('.dealerSixthImage')
+
 let numClick = 0
 let cardNumberValue = "<%=@startingHand.to_i%>"
 
@@ -90,5 +125,9 @@ let cardNumberValue = "<%=@startingHand.to_i%>"
 
   numClick +=1
   }
+  }
+  let dealerCount = 0
+  if(dealerCount < 17 && cardNumberValue >= 21){
+    dealerSecondImage.setAttribute('src', "<%=@dealers_second_image%>")
   }
 </script>

@@ -84,25 +84,25 @@ get("/blackjack") do
   # 
   # Second card
   # 
-  @dealers_second_hash = cards.at(7)
-  @dealers_second_value = @dealers_second_hash["value"]
-  @dealers_second_image = @dealers_second_hash["image"]
+  # @dealers_second_hash = cards.at(7)
+  # @dealers_second_value = @dealers_second_hash["value"]
+  # @dealers_second_image = @dealers_second_hash["image"]
 
-  @dealers_third_hash = cards.at(8)
-  @dealers_third_value = @dealers_third_hash["value"]
-  @dealers_third_image = @dealers_third_hash["image"]
+  # @dealers_third_hash = cards.at(8)
+  # @dealers_third_value = @dealers_third_hash["value"]
+  # @dealers_third_image = @dealers_third_hash["image"]
 
-  @dealers_fourth_hash = cards.at(9)
-  @dealers_fourth_value = @dealers_fourth_hash["value"]
-  @dealers_fourth_image = @dealers_fourth_hash["image"]
+  # @dealers_fourth_hash = cards.at(9)
+  # @dealers_fourth_value = @dealers_fourth_hash["value"]
+  # @dealers_fourth_image = @dealers_fourth_hash["image"]
 
-  @dealers_fifth_hash = cards.at(10)
-  @dealers_fifth_value = @dealers_fifth_hash["value"]
-  @dealers_fifth_image = @dealers_fifth_hash["image"]
+  # @dealers_fifth_hash = cards.at(10)
+  # @dealers_fifth_value = @dealers_fifth_hash["value"]
+  # @dealers_fifth_image = @dealers_fifth_hash["image"]
 
-  @dealers_sixth_hash = cards.at(11)
-  @dealers_sixth_value = @dealers_sixth_hash["value"]
-  @dealers_sixth_image = @dealers_sixth_hash["image"]
+  # @dealers_sixth_hash = cards.at(11)
+  # @dealers_sixth_value = @dealers_sixth_hash["value"]
+  # @dealers_sixth_image = @dealers_sixth_hash["image"]
 
   
 
@@ -217,3 +217,4 @@ get("/how-to-play") do
   erb(:how_to_play, {layout: :layout})
 
 end
+
