@@ -9,125 +9,223 @@
 
 <!--<p>3.)The cards hash:</p><br>
 <p><%#=@card_one_hash%></p>-->
-<div class="container">
-  <div class="dealers_cards row">
-    <div class="card-column col">
-      <img src="<%=@dealers_first_image%>" alt="">
-    </div>
-    <div class="card-column dealerSecondCard col">
-      <img class="dealerSecondImage" src="<%=@backOfCard%>" alt="">
-    </div>
-    <div class="card-column dealerThirdCArd ">
-      <img class="dealerThirdImage" src="" alt="">
-    </div>
-    <div class="card-column dealerFourthCard">
-      <img class="dealerFourthCard" src="" alt="">
-    </div>
-    <div class="card-column dealerFifthCard ">
-      <img class="dealerFifthCard" src="" alt="">
-    </div>
-    <div class="card-column dealerSixthCard ">
-      <img class="dealerSixthCard" src="" alt="">
-    </div>
-  </div>
-</div>
 
 <p>4.)The cards value:</p><br>
 <p>Your in the money</p>
 <p>Card one <%=@card_one_value%></p>
 <p>Card two <%=@card_two_value%></p>
-<p>Dealers total: <%=%></p>
+<p>Dealers total: <span class="dealerTotal"><%=@dealers_first_value%></span></p>
 <p class="playerTotal">Your total: <%=@startingHand%></p>
 
 <p>4.)The cards image:</p><br>
 <div class="container">
   <div class="players_cards row">
-    <div class="card-column col">
+    <div class="card-column col-6">
       <img src="<%=@card_one_image%>" alt="<%=@card_one_value%> of <%=@card_one_suit%>">
     </div>
-    <div class="card-column col">
+    <div class="card-column col-6">
       <img src="<%=@card_two_image%>" alt="<%=@card_two_value%> of <%=@card_two_suit%>">
     </div>
-    <div class="card-column thirdCard">
-      <img class="thirdImage" alt="">
-    </div>
-    <div class="card-column fourthCard">
-      <img class="fourthImage"  alt="">
-    </div>
-    <div class="card-column fifthCard">
-      <img class="fifthImage" alt="">
-    </div>
-    <div class="card-column sixthCard">
-      <img class="sixthImage" alt="">
-    </div>
+    <div class="card-column thirdCard"><img class="thirdImage" alt=""></div>
+    <div class="card-column fourthCard"><img class="fourthImage"  alt=""></div>
+    <div class="card-column fifthCard"><img class="fifthImage" alt=""></div>
+    <div class="card-column sixthCard"><img class="sixthImage" alt=""></div>
   </div>
 </div>
 <button id="hit_button">Hit</button>
 <button id="stand">Stand</button>
-<button id="surrender">Surrender</button>
-<button><a href="/blackjack">New game</a></button>
 <!--<p>4.)The cards keys:</p><br>
 <p><%#=@card_keys%></p>-->
 
 <script>
 let playerTotal = document.querySelector('.playerTotal')
+let stand_button = document.querySelector('#stand_button')
 let hit_button = document.querySelector('#hit_button')
-let players_cards = document.querySelector('.players_cards')
 let thirdImage = document.querySelector('.thirdImage')
 let fourthImage = document.querySelector('.fourthImage')
 let fifthImage = document.querySelector('.fifthImage')
 let sixthImage = document.querySelector('.sixthImage')
-let thirdCard = document.querySelector('.thirdCard')
-let fourthCard = document.querySelector('.fourthCard')
-let fifthCard = document.querySelector('.fifthCard')
-let sixthCard = document.querySelector('.sixthCard')
-
-let dealerSecondCard = document.querySelector('.dealerSecondCard')
-let dealerThirdCard = document.querySelector('.dealerThirdCard')
-let dealerFourthCard = document.querySelector('.dealerFourthCard')
-let dealerFifthCard = document.querySelector('.dealerFifthCard')
-let dealerSixthCard = document.querySelector('.dealerSixthCard')
-
-let dealerSecondImage = document.querySelector('.dealerSecondImage')
-let dealerThirdImage = document.querySelector('.dealerThirdImage')
-let dealerFourthImage = document.querySelector('.dealerFourthImage')
-let dealerFifthImage = document.querySelector('.dealerFifthImage')
-let dealerSixthImage = document.querySelector('.dealerSixthImage')
-
 let numClick = 0
-let cardNumberValue = "<%=@startingHand.to_i%>"
+let dealerFlip = 0
+let aceCounter = 0
+let aceCounterDealer = 0
+let cardNumberValue = <%=@startingHand%>
+let dealerCount = <%=@dealerCardCollection[0]%>
 
-  document.querySelector('#hit_button').onclick = () => {
-  if(numClick == 0 && cardNumberValue < 21){
-  playerTotal.innerText = "Your total: <%=@startingHand.to_i + @card_three_value.to_i%>"
+function isAce(card){
+    if(card == 11){
+      aceCounter += 1
+    }
+  }
+function isAceDealer(card){
+    if(card == 11){
+      aceCounterDealer += 1
+    }
+  }
+function aceConverter(){
+  cardNumberValue -= 10
+  aceCounter -= 1
+}
+function aceDealerConverter(){
+  dealerCount -= 10
+  aceCounterDealer -= 1
+}
+isAce(<%=@playerCardCollection[0]%>)
+isAce(<%=@playerCardCollection[1]%>)
+isAceDealer(<%=@dealerCardCollection[0]%>)
+
+if(cardNumberValue > 21 && aceCounter >= 1){
+  aceConverter()
+  }
+document.querySelector('#stand_button').onclick = () => {
+    numClick = null
+  if( dealerFlip == 0 && dealerCount <= 17){
+    function flipTimer(){
+      setTimeout(firstFlip, 1500)
+      }
+      flipTimer()
+    }
+  }
+  function firstFlip(){
+     dealerSecondImage.setAttribute('src', "<%=@dealers_second_image%>")
+      dealerSecondCard.setAttribute("class", "dealerSecondCard col")
+      dealerTotal.innerText="<%=@dealerCardCollection[0] + @dealerCardCollection[1]%>"
+     dealerCount += <%=@dealerCardCollection[1]%>
+     isAceDealer(<%=@dealerCardCollection[1]%>)
+     dealerFlip += 1
+     if(dealerCount < 17){      
+     secondFlipTimer()
+     }
+     else if(dealerCount >= 17 ){
+        if(aceCounterDealer >= 1 && dealerCount > 21){
+        aceDealerConverter()
+        } else if(aceCounterDealer == 0){
+         gameResults()
+         }
+      } 
+  }
+  function secondFlipTimer(){
+      setTimeout(secondFlip, 1500)
+      }
+
+  function secondFlip(){
+     dealerThirdImage.setAttribute('src', "<%=@dealers_third_image%>")
+     dealerThirdCard.setAttribute("class", "dealerThirdCard col")
+     dealerTotal.innerText="<%=@dealerCardCollection[0] + @dealerCardCollection[1] + @dealerCardCollection[2]%>"
+     dealerCount += <%=@dealerCardCollection[2]%>
+     isAceDealer(<%=@dealerCardCollection[2]%>)
+     dealerFlip += 1
+     if(dealerCount < 17){      
+      thirdFlipTimer()
+      } 
+      else if(dealerCount >= 17 ){
+        if(aceCounterDealer >= 1 && dealerCount > 21){
+        aceDealerConverter()
+        }
+        else if(aceCounterDealer == 0){
+         gameResults()
+         }
+      } 
+  }
+    
+  function thirdFlipTimer(){
+      setTimeout(thirdFlip, 1500)
+      }
+  function thirdFlip(){
+     dealerFourthImage.setAttribute('src', "<%=@dealers_fourth_image%>")
+     dealerFourthCard.setAttribute("class", "dealerFourthCard col")
+     dealerTotal.innerText="<%=@dealerCardCollection[0] + @dealerCardCollection[1] + @dealerCardCollection[2] + @dealerCardCollection[3]%>"
+     dealerCount += <%=@dealerCardCollection[3]%>
+     isAceDealer(<%=@dealerCardCollection[3]%>)
+     dealerFlip += 1
+     if(dealerCount < 17){      
+     fourthFlipTimer()
+     }
+     else if(dealerCount >= 17 ){
+        if(aceCounterDealer >= 1 && dealerCount > 21){
+        aceDealerConverter()
+        }
+         else if(aceCounterDealer == 0){
+         gameResults()
+         }
+      } 
+  }
+  function fourthFlipTimer(){
+      setTimeout(fourthFlip, 1500)
+      }
+  function fourthFlip(){
+     dealerFifthImage.setAttribute('src', "<%=@dealers_fifth_image%>")
+     dealerFifthCard.setAttribute("class", "dealerFifthCard col")
+     dealerTotal.innerText="<%=@dealerCardCollection[0] + @dealerCardCollection[1] + @dealerCardCollection[2] + @dealerCardCollection[3] + @dealerCardCollection[4]%>"
+     dealerCount += <%=@dealerCardCollection[4]%>
+     isAceDealer(<%=@dealerCardCollection[4]%>)
+     dealerFlip += 1
+     if(dealerCount < 17){      
+      fifthFlipTimer()
+     }
+     else if(dealerCount >= 17 ){
+
+        if(aceCounterDealer >= 1 && dealerCount > 21){
+        aceDealerConverter()
+        } 
+       else if(aceCounterDealer == 0){
+         gameResults()
+         }
+      } 
+  }
+  function fifthFlipTimer(){
+      setTimeout(fifthFlip, 1500)
+      }
+  function fifthFlip(){
+     dealerSixthImage.setAttribute('src', "<%=@dealers_sixth_image%>")
+     dealerSixthCard.setAttribute("class", "dealerSixthCard col")
+     dealerTotal.innerText="<%=@dealerCardCollection[0] + @dealerCardCollection[1] + @dealerCardCollection[2] + @dealerCardCollection[3] + @dealerCardCollection[4]+ @dealerCardCollection[5]%>"
+     dealerCount += <%=@dealerCardCollection[5]%>
+     dealerFlip += 1
+    } 
+
+  
+
+document.querySelector('#hit_button').onclick = () => {
+  if((numClick == 0 && cardNumberValue < 21) || (cardNumberValue < 21 && aceCounter >= 1)){
+  isAce(<%=@playerCardCollection[2]%>)
+  if(cardNumberValue > 21 && aceCounter >= 1){
+  aceConverter()
+  }
+  playerTotal.innerText = "Your total: <%=@startingHand.to_i + @playerCardCollection[2]%>"
   thirdImage.setAttribute("src", "<%=@card_three_image%>");
-  thirdCard.setAttribute("class", "thirdCard col")
+  
   numClick +=1
-  cardNumberValue += <%=@card_three_value.to_i%>
   } 
-  else if(numClick == 1 && cardNumberValue < 21){
-  playerTotal.innerText = "Your total: <%=@startingHand.to_i + @card_three_value.to_i + @card_four_value.to_i%>"
+  else if((numClick == 1 && cardNumberValue < 21) || (cardNumberValue < 21 && aceCounter >= 1)){
+  isAce(<%=@playerCardCollection[3]%>)
+  if(cardNumberValue > 21 && aceCounter >= 1){
+  aceConverter()
+  }
+  playerTotal.innerText = "Your total: <%=@startingHand.to_i + @playerCardCollection[2] + @playerCardCollection[3]%>"
     fourthImage.setAttribute("src", "<%=@card_four_image%>");
-    fourthCard.setAttribute("class", "fourthCard col")
+
   numClick +=1
   }
-  else if(numClick == 2 && cardNumberValue < 21){
-  playerTotal.innerText = "Your total: <%=@startingHand.to_i + @card_three_value.to_i + @card_four_value.to_i + @card_five_value.to_i%>"
+  else if((numClick == 2 && cardNumberValue < 21) || (cardNumberValue < 21 && aceCounter >= 1)){
+  isAce(<%=@playerCardCollection[4]%>)
+  if(cardNumberValue > 21 && aceCounter >= 1){
+  aceConverter()
+  }
+  playerTotal.innerText = "Your total: <%=@startingHand.to_i + @playerCardCollection[2] + @playerCardCollection[3] + @playerCardCollection[4]%>"
     fifthImage.setAttribute("src", "<%=@card_five_image%>");
-    fifthCard.setAttribute("class", "fifthCard col")
-
   numClick +=1
   }
   else if(numClick == 3 && cardNumberValue < 21){
   playerTotal.innerText = "Your total: <%=@startingHand.to_i + @card_three_value.to_i + @card_four_value.to_i + @card_five_value.to_i + @card_six_image.to_i%>"
     sixthImage.setAttribute("src", "<%=@card_six_image%>");
-    sixthCard.setAttribute("class", "sixthCard col")
-
   numClick +=1
-  }
-  }
-  let dealerCount = 0
-  if(dealerCount < 17 && cardNumberValue >= 21){
-    dealerSecondImage.setAttribute('src', "<%=@dealers_second_image%>")
+  } 
   }
 </script>
+
+
+<!--  numClick == 0 onclick queryselectorall(.col-6) change it to col-4    -->
+<!--  numClick == 1 onclick queryselectorall(.col-4) change it to col-3    -->
+<!--  numClick == 2 onclick queryselectorall(.col-3) change it to col-2    -->
+<!--  for numClick == 3 DONT CHANGE ATTRITUBE JUST change card value and add card image to display  -->
