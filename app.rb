@@ -102,45 +102,37 @@ get("/blackjack") do
 
   #Works
   #Player
-  @aceCounter = 0
   
   if face_cards.include?(@card_one_value)
     @card_one_value = 10
   elsif @card_one_value == "ACE"
     @card_one_value = 11
-    @aceCounter += 1
-
   end
 
   if face_cards.include?(@card_two_value)
     @card_two_value = 10
   elsif @card_two_value == "ACE"
     @card_two_value = 11
-    @aceCounter += 1
   end
   if face_cards.include?(@card_three_value)
     @card_three_value = 10
   elsif @card_three_value == "ACE"
     @card_three_value = 11
-    @aceCounter += 1
   end
   if face_cards.include?(@card_four_value)
     @card_four_value = 10
   elsif @card_four_value == "ACE"
     @card_four_value = 11
-    @aceCounter += 1
   end
   if face_cards.include?(@card_five_value)
     @card_five_value = 10
   elsif @card_five_value == "ACE"
     @card_five_value = 11
-    @aceCounter += 1
   end
   if face_cards.include?(@card_six_value)
     @card_six_value = 10
   elsif @card_six_value == "ACE"
     @card_six_value = 11
-    @aceCounter += 1
   end
 
 
